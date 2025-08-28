@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+python-dotenv
+PyPDF2
+langchain
+langchain-core
+langchain-community
+langchain-groq
+requests
+beautifulsoup4
+html5lib
+lxml
