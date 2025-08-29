@@ -560,10 +560,11 @@ if 'analysis_timestamp' not in st.session_state:
 
 def get_groq_api_keys():
     keys = {
-        'GROQ_API_KEY1': os.getenv("GROQ_API_KEY1"),
-        'GROQ_API_KEY2': os.getenv("GROQ_API_KEY2"),
-        'GROQ_API_KEY3': os.getenv("GROQ_API_KEY3")
-    }
+    'GROQ_API_KEY1': st.secrets["GROQ_API_KEY1"],
+    'GROQ_API_KEY2': st.secrets["GROQ_API_KEY2"],
+    'GROQ_API_KEY3': st.secrets["GROQ_API_KEY3"]
+}
+
     
     missing_keys = [key for key, value in keys.items() if not value]
     if missing_keys:
