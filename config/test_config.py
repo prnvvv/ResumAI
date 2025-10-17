@@ -12,8 +12,12 @@ class TestConfig:
     MAX_PAGE_LOAD_TIME = 10
     MAX_MEMORY_USAGE = 500
     
-    # File paths
+    # File paths - ADD THESE
     SAMPLE_RESUME_PATH = "tests/test_data/sample_resume.pdf"
+    TECHNICAL_RESUME_PATH = "tests/test_data/technical_resume.pdf"
+    MARKETING_RESUME_PATH = "tests/test_data/marketing_resume.pdf"
+    LARGE_RESUME_PATH = "tests/test_data/large_resume.pdf"
+    INVALID_FILE_PATH = "tests/test_data/invalid_file.txt"
     
     # Test data
     TEST_USER = {
