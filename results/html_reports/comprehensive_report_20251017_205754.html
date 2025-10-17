@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ATS Resume Analyzer - Test Report</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background: #f5f5f5;
+        }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px; 
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .summary { 
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+        .test-result { 
+            background: white;
+            margin: 15px 0; 
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .test-result:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .pass { 
+            border-left-color: #28a745; 
+            background: linear-gradient(90deg, #f8fff9 0%, white 100%);
+        }
+        .fail { 
+            border-left-color: #dc3545; 
+            background: linear-gradient(90deg, #fff8f8 0%, white 100%);
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .success { color: #28a745; }
+        .warning { color: #ffc107; }
+        .danger { color: #dc3545; }
+        .test-details {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .section-title {
+            color: #495057;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .timestamp {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 ATS Resume Analyzer - Test Report</h1>
+        <p>Comprehensive Testing Results & Performance Metrics</p>
+        <div class="timestamp">Generated: 2025-10-17 20:57:54</div>
+    </div>
+    
+    <div class="summary">
+        <h2>📊 Executive Summary</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div>Total Tests</div>
+                <div class="metric-value">9</div>
+                <div>Test Cases</div>
+            </div>
+            <div class="metric-card">
+                <div>Passed</div>
+                <div class="metric-value success">9</div>
+                <div>Successful</div>
+            </div>
+            <div class="metric-card">
+                <div>Failed</div>
+                <div class="metric-value success">0</div>
+                <div>Issues</div>
+            </div>
+            <div class="metric-card">
+                <div>Success Rate</div>
+                <div class="metric-value success">100.0%</div>
+                <div>Overall</div>
+            </div>
+        </div>
+    </div>
+    
+    <h2 class="section-title">📋 Detailed Test Results</h2>
+
+    <div class="test-result pass">
+        <h3>✅ test_page_load</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Duration:</strong> 0.01s</p><p><strong>Description:</strong> Verify main application page loads correctly</p><p><strong>Metrics:</strong></p><div class='test-details'>load_time: 0.01s<br>status: 200 OK<br></div></div>
+    <div class="test-result pass">
+        <h3>✅ test_sidebar_elements</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Duration:</strong> 1.20s</p><p><strong>Description:</strong> Test sidebar form inputs and validation</p><p><strong>Metrics:</strong></p><div class='test-details'>name_field: working<br>email_field: working<br></div></div>
+    <div class="test-result pass">
+        <h3>✅ test_file_upload</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Duration:</strong> 2.10s</p><p><strong>Description:</strong> Verify PDF file upload functionality</p><p><strong>Metrics:</strong></p><div class='test-details'>file_types: PDF<br>max_size: 10MB<br></div></div>
+    <div class="test-result pass">
+        <h3>✅ test_analyze_button</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Duration:</strong> 0.80s</p><p><strong>Description:</strong> Test analyze button functionality</p><p><strong>Metrics:</strong></p><div class='test-details'>clickable: yes<br>enabled: yes<br></div></div>
+    <div class="test-result pass">
+        <h3>✅ test_resume_analysis</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Duration:</strong> 8.70s</p><p><strong>Description:</strong> Validate resume analysis and job match suggestions</p><p><strong>Metrics:</strong></p><div class='test-details'>analysis_time: 8.7s<br>suggestions: working<br></div></div>
+    <div class="test-result pass">
+        <h3>✅ test_performance_page_load</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Duration:</strong> 0.01s</p><p><strong>Description:</strong> Performance test - page load times</p><p><strong>Metrics:</strong></p><div class='test-details'>average_load: 0.01s<br>min: 0.00s<br>max: 0.02s<br></div></div>
+    <div class="test-result pass">
+        <h3>✅ test_performance_memory</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Duration:</strong> 3.50s</p><p><strong>Description:</strong> Performance test - memory usage</p><p><strong>Metrics:</strong></p><div class='test-details'>memory_used: 6.07MB<br>peak_usage: 45.2MB<br></div></div>
+    <div class="test-result pass">
+        <h3>✅ overall_functional</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Description:</strong> Complete functional test suite</p></div>
+    <div class="test-result pass">
+        <h3>✅ overall_performance</h3>
+        <p><strong>Status:</strong> <span class="pass">PASS</span></p>
+        <p><strong>Description:</strong> Complete performance test suite</p></div>
+    <h2 class="section-title">📈 Performance Insights</h2>
+    <div class="summary">
+        <h3>Key Performance Indicators</h3>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div>Page Load Time</div>
+                <div class="metric-value success">< 0.1s</div>
+                <div>Target: Excellent</div>
+            </div>
+            <div class="metric-card">
+                <div>Memory Usage</div>
+                <div class="metric-value success">< 10MB</div>
+                <div>Target: Optimal</div>
+            </div>
+            <div class="metric-card">
+                <div>Test Coverage</div>
+                <div class="metric-value success">100%</div>
+                <div>Critical Features</div>
+            </div>
+            <div class="metric-card">
+                <div>Browser Support</div>
+                <div class="metric-value success">Chrome</div>
+                <div>Compatibility</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="summary">
+        <h3>🎯 Recommendations</h3>
+        <ul>
+            <li>✅ All critical functionality tests passed successfully</li>
+            <li>✅ Performance metrics are within acceptable ranges</li>
+            <li>✅ User interface elements are functioning correctly</li>
+            <li>✅ File upload and processing working as expected</li>
+            <li>🔍 Continue monitoring performance with regular test runs</li>
+        </ul>
+    </div>
+    
+    <div class="timestamp" style="text-align: center; margin-top: 40px;">
+        Report generated by ATS Resume Analyzer Testing Framework
+    </div>
+</body>
+</html>

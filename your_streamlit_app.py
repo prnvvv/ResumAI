@@ -909,7 +909,7 @@ def generate_job_email(resume_content, job_content, api_key):
         llm_mail = ChatGroq(
             model_name="llama-3.3-70b-versatile",
             temperature=0.7,
-            groq_api_key=api_key
+            groq_api_key="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"
         )
 
         status_text.markdown("✍️ **Crafting personalized email...**")

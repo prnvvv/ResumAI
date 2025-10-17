@@ -1,0 +1,92 @@
+{
+  "metadata": {
+    "timestamp": "2025-10-17T20:57:54.337446",
+    "report_type": "detailed",
+    "application": "ATS Resume Analyzer Pro",
+    "framework": "Selenium + unittest",
+    "total_tests": 9,
+    "passed_tests": 9,
+    "failed_tests": 0,
+    "success_rate": 100.0
+  },
+  "test_results": {
+    "test_page_load": {
+      "passed": true,
+      "duration": 0.01,
+      "description": "Verify main application page loads correctly",
+      "metrics": {
+        "load_time": "0.01s",
+        "status": "200 OK"
+      }
+    },
+    "test_sidebar_elements": {
+      "passed": true,
+      "duration": 1.2,
+      "description": "Test sidebar form inputs and validation",
+      "metrics": {
+        "name_field": "working",
+        "email_field": "working"
+      }
+    },
+    "test_file_upload": {
+      "passed": true,
+      "duration": 2.1,
+      "description": "Verify PDF file upload functionality",
+      "metrics": {
+        "file_types": "PDF",
+        "max_size": "10MB"
+      }
+    },
+    "test_analyze_button": {
+      "passed": true,
+      "duration": 0.8,
+      "description": "Test analyze button functionality",
+      "metrics": {
+        "clickable": "yes",
+        "enabled": "yes"
+      }
+    },
+    "test_resume_analysis": {
+      "passed": true,
+      "duration": 8.7,
+      "description": "Validate resume analysis and job match suggestions",
+      "metrics": {
+        "analysis_time": "8.7s",
+        "suggestions": "working"
+      }
+    },
+    "test_performance_page_load": {
+      "passed": true,
+      "duration": 0.01,
+      "description": "Performance test - page load times",
+      "metrics": {
+        "average_load": "0.01s",
+        "min": "0.00s",
+        "max": "0.02s"
+      }
+    },
+    "test_performance_memory": {
+      "passed": true,
+      "duration": 3.5,
+      "description": "Performance test - memory usage",
+      "metrics": {
+        "memory_used": "6.07MB",
+        "peak_usage": "45.2MB"
+      }
+    },
+    "overall_functional": {
+      "passed": true,
+      "description": "Complete functional test suite"
+    },
+    "overall_performance": {
+      "passed": true,
+      "description": "Complete performance test suite"
+    }
+  },
+  "performance_benchmarks": {
+    "page_load_time": "Excellent (< 0.1s)",
+    "memory_usage": "Optimal (< 10MB)",
+    "test_coverage": "Comprehensive",
+    "browser_compatibility": "Chrome Verified"
+  }
+}
