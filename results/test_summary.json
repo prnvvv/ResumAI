@@ -1,7 +1,8 @@
 {
-  "timestamp": "2025-10-17T20:49:55.592581",
+  "timestamp": "2025-10-17T21:38:22.105568",
   "results": {
     "functional": true,
-    "performance": true
+    "performance": true,
+    "non_functional": true
   }
 }

@@ -13,6 +13,7 @@ def run_tests():
     os.makedirs("results", exist_ok=True)
     os.makedirs("results/screenshots", exist_ok=True)
     os.makedirs("results/performance_reports", exist_ok=True)
+    os.makedirs("results/non_functional_reports", exist_ok=True)  # NEW
     
     test_results = {}
     
@@ -41,6 +42,25 @@ def run_tests():
         print("STDOUT:", result.stdout)
         if result.stderr:
             print("STDERR:", result.stderr)
+        
+        # 3. NEW SECTION - RUN NON-FUNCTIONAL TESTS
+        print("\n3. RUNNING NON-FUNCTIONAL TESTS")
+        print("-" * 40)
+        
+        # Check if non-functional tests exist before running
+        if os.path.exists("tests/non_functional"):
+            result = subprocess.run([
+                sys.executable, "run_non_functional_tests.py"
+            ], capture_output=True, text=True)
+            
+            test_results['non_functional'] = result.returncode == 0
+            print("STDOUT:", result.stdout)
+            if result.stderr:
+                print("STDERR:", result.stderr)
+        else:
+            print("WARNING: Non-functional tests directory not found - skipping")
+            print("INFO: Run: python create_non_functional_tests.py to set up")
+            test_results['non_functional'] = False  # Mark as failed since not implemented
         
     except Exception as e:
         print(f"Error running tests: {e}")
