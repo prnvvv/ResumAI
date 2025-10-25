@@ -6,7 +6,6 @@ import json
 import re
 import time
 from datetime import datetime
-from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from langchain_community.document_loaders import WebBaseLoader
@@ -14,8 +13,16 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 
-load_dotenv()
+# =====================================================================
+# HARDCODED API KEYS - NO .env NEEDED
+# =====================================================================
+GROQ_API_KEY1 = ""
+GROQ_API_KEY2 = ""
+GROQ_API_KEY3 = ""
 
+# =====================================================================
+# STREAMLIT PAGE CONFIGURATION
+# =====================================================================
 st.set_page_config(
     page_title="ATS Resume Analyzer Pro",
     page_icon="🤖",
@@ -23,6 +30,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# =====================================================================
+# CUSTOM CSS STYLING
+# =====================================================================
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -540,11 +550,9 @@ st.markdown("""
         .hero-title {
             font-size: 2.5rem;
         }
-        
         .metric-value {
             font-size: 2rem;
         }
-        
         .block-container {
             padding: 1rem 0.5rem;
         }
@@ -562,6 +570,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# =====================================================================
+# SESSION STATE INITIALIZATION
+# =====================================================================
 if 'analysis_result' not in st.session_state:
     st.session_state.analysis_result = None
 if 'email_content' not in st.session_state:
@@ -573,27 +584,36 @@ if 'user_data_history' not in st.session_state:
 if 'current_user_data' not in st.session_state:
     st.session_state.current_user_data = {}
 
+# =====================================================================
+# API KEY FUNCTION (HARDCODED - NO ENV NEEDED)
+# =====================================================================
 def get_groq_api_keys():
+    """Return hardcoded API keys - no environment variables needed"""
     keys = {
-    'GROQ_API_KEY1': os.environ.get('GROQ_API_KEY1'),
-    'GROQ_API_KEY2': os.environ.get('GROQ_API_KEY2'),
-    'GROQ_API_KEY3': os.environ.get('GROQ_API_KEY3')
-}
-
+        'GROQ_API_KEY1': GROQ_API_KEY1,
+        'GROQ_API_KEY2': GROQ_API_KEY2,
+        'GROQ_API_KEY3': GROQ_API_KEY3
+    }
+    
+    # Validate all keys are present
     missing_keys = [key for key, value in keys.items() if not value]
     if missing_keys:
         st.markdown(f"""
         <div class="error-alert">
             <strong>⚠️ Configuration Error</strong><br>
-            Missing environment variables: {', '.join(missing_keys)}<br>
-            Please set your GROQ API keys in the .env file
+            Missing API keys: {', '.join(missing_keys)}<br>
+            Please check the hardcoded API keys at the top of the script.
         </div>
         """, unsafe_allow_html=True)
         return None
     
     return keys
 
+# =====================================================================
+# PDF EXTRACTION FUNCTION
+# =====================================================================
 def extract_text_from_pdf(pdf_file):
+    """Extract text content from uploaded PDF file"""
     try:
         pdf_reader = pdf.PdfReader(pdf_file)
         text = ""
@@ -609,10 +629,14 @@ def extract_text_from_pdf(pdf_file):
         """, unsafe_allow_html=True)
         return None
 
+# =====================================================================
+# JOB WEBSITE SCRAPER
+# =====================================================================
 def scrape_job_website(job_link, api_key):
+    """Scrape and extract job description from URL"""
     if not job_link:
         return None
-
+    
     try:
         progress_bar = st.progress(0)
         status_text = st.empty()
@@ -672,7 +696,11 @@ def scrape_job_website(job_link, api_key):
         """, unsafe_allow_html=True)
         return None
 
+# =====================================================================
+# VISUALIZATION FUNCTIONS
+# =====================================================================
 def create_match_chart(match_percentage):
+    """Create gauge chart for match percentage"""
     fig = go.Figure(go.Indicator(
         mode = "gauge+number+delta",
         value = match_percentage,
@@ -708,6 +736,7 @@ def create_match_chart(match_percentage):
     return fig
 
 def create_skills_radar(analysis_data):
+    """Create radar chart for skills comparison"""
     categories = ['Technical Skills', 'Experience Match', 'Education Fit', 'Keyword Coverage', 'Format Quality']
     match_percentage = analysis_data.get('match_percentage', 0)
     
@@ -718,9 +747,9 @@ def create_skills_radar(analysis_data):
         max(match_percentage - 20, 30),
         min(match_percentage + 15, 100)
     ]
-    
+
     fig = go.Figure()
-    
+
     fig.add_trace(go.Scatterpolar(
         r=values,
         theta=categories,
@@ -729,7 +758,7 @@ def create_skills_radar(analysis_data):
         line_color='#667eea',
         fillcolor='rgba(102, 126, 234, 0.3)'
     ))
-    
+
     fig.add_trace(go.Scatterpolar(
         r=[90, 90, 90, 90, 90],
         theta=categories,
@@ -739,7 +768,7 @@ def create_skills_radar(analysis_data):
         fillcolor='rgba(39, 174, 96, 0.1)',
         line_dash='dash'
     ))
-    
+
     fig.update_layout(
         polar=dict(
             radialaxis=dict(
@@ -763,7 +792,11 @@ def create_skills_radar(analysis_data):
     
     return fig
 
+# =====================================================================
+# RESUME ANALYSIS FUNCTION
+# =====================================================================
 def analyze_resume(resume_content, job_content, api_key):
+    """Analyze resume against job description using AI"""
     try:
         progress_bar = st.progress(0)
         status_text = st.empty()
@@ -783,7 +816,6 @@ def analyze_resume(resume_content, job_content, api_key):
         
         prompt_extract = PromptTemplate.from_template(
             """Act as an expert ATS (Application Tracking System) professional with 10+ years of experience in resume evaluation and talent acquisition.
-
 Perform a comprehensive analysis of the resume against the job description and provide insights in JSON format.
 
 Resume Content: {resume_content}
@@ -809,7 +841,7 @@ Generate a detailed JSON response with this exact structure:
     }},
     "missing_keywords": [
         "Docker",
-        "Kubernetes", 
+        "Kubernetes",
         "CI/CD Pipeline"
     ],
     "improvement_suggestions": [
@@ -826,7 +858,7 @@ Generate a detailed JSON response with this exact structure:
         }},
         {{
             "name": "Certified Kubernetes Administrator",
-            "platform": "Linux Foundation", 
+            "platform": "Linux Foundation",
             "link": "https://training.linuxfoundation.org/certification/",
             "priority": "Medium"
         }}
@@ -841,7 +873,7 @@ Generate a detailed JSON response with this exact structure:
 
 Provide accurate percentages and actionable recommendations based on the content analysis."""
         )
-
+        
         status_text.markdown("🎯 **Generating insights and recommendations...**")
         progress_bar.progress(80)
 
@@ -897,7 +929,11 @@ Provide accurate percentages and actionable recommendations based on the content
         """, unsafe_allow_html=True)
         return None
 
+# =====================================================================
+# EMAIL GENERATION FUNCTION
+# =====================================================================
 def generate_job_email(resume_content, job_content, api_key):
+    """Generate personalized job application email"""
     try:
         progress_bar = st.progress(0)
         status_text = st.empty()
@@ -909,7 +945,7 @@ def generate_job_email(resume_content, job_content, api_key):
         llm_mail = ChatGroq(
             model_name="llama-3.3-70b-versatile",
             temperature=0.7,
-            groq_api_key="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"
+            groq_api_key=api_key  # FIXED: Now uses the passed API key
         )
 
         status_text.markdown("✍️ **Crafting personalized email...**")
@@ -964,7 +1000,11 @@ def generate_job_email(resume_content, job_content, api_key):
         """, unsafe_allow_html=True)
         return None
 
+# =====================================================================
+# DATA TRACKING FUNCTIONS
+# =====================================================================
 def create_user_dataframe(user_info, analysis_data, job_link, resume_filename):
+    """Create DataFrame from user analysis data"""
     user_data = {
         'Timestamp': st.session_state.analysis_timestamp,
         'Name': user_info.get('name', 'N/A'),
@@ -991,6 +1031,7 @@ def create_user_dataframe(user_info, analysis_data, job_link, resume_filename):
     return pd.DataFrame([user_data])
 
 def display_all_user_data():
+    """Display all historical user data and analysis"""
     if st.session_state.user_data_history:
         st.markdown("""
         <div class="dataframe-container">
@@ -1061,16 +1102,20 @@ def display_all_user_data():
         
         st.markdown("</div>", unsafe_allow_html=True)
 
+# =====================================================================
+# ANALYSIS RESULTS DISPLAY
+# =====================================================================
 def display_analysis_results(analysis_data):
+    """Display comprehensive analysis results with visualizations"""
     if not analysis_data:
         return
     
     match_percentage = analysis_data.get('match_percentage', 0)
     missing_keywords = analysis_data.get('missing_keywords', [])
     suggestions = analysis_data.get('improvement_suggestions', [])
-    
+
     tab1, tab2, tab3 = st.tabs(["📊 Analysis Overview", "📈 Detailed Insights", "🎯 Recommendations"])
-    
+
     with tab1:
         col1, col2 = st.columns([1, 1])
         
@@ -1105,7 +1150,7 @@ def display_analysis_results(analysis_data):
                 <div class="metric-value">{len(suggestions)}</div>
             </div>
             """, unsafe_allow_html=True)
-    
+
     with tab2:
         match_reasons = analysis_data.get('match_reasons', {})
         
@@ -1181,7 +1226,7 @@ def display_analysis_results(analysis_data):
                     """, unsafe_allow_html=True)
             
             st.markdown("</div>", unsafe_allow_html=True)
-    
+
     with tab3:
         col1, col2 = st.columns(2)
         
@@ -1195,7 +1240,7 @@ def display_analysis_results(analysis_data):
                 priority = "🔥 High" if i <= 2 else "⭐ Medium" if i <= 4 else "📋 Low"
                 st.markdown(f"""
                 <div class="glass-card" style="margin: 1rem 0; padding: 1.5rem;">
-                    <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <strong style="color: #667eea;">#{i}</strong>
                         <span style="background: rgba(102, 126, 234, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; color: #667eea;">{priority}</span>
                     </div>
@@ -1223,7 +1268,7 @@ def display_analysis_results(analysis_data):
                     
                     st.markdown(f"""
                     <div class="cert-card">
-                        <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                             <h4 style="margin: 0; color: white;">🏆 {name}</h4>
                             <span style="background: {priority_color}; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">{priority}</span>
                         </div>
@@ -1236,7 +1281,11 @@ def display_analysis_results(analysis_data):
                 
                 st.markdown("</div>", unsafe_allow_html=True)
 
+# =====================================================================
+# MAIN APPLICATION
+# =====================================================================
 def main():
+    """Main application function"""
     st.markdown("""
     <div class="hero-section">
         <h1 class="hero-title">🤖 ATS Resume Analyzer Pro</h1>
@@ -1493,5 +1542,8 @@ def main():
     </div>
     """, unsafe_allow_html=True)
 
+# =====================================================================
+# APPLICATION ENTRY POINT
+# =====================================================================
 if __name__ == "__main__":
     main()
